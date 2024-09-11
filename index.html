@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoForge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="website icon" type="png" href="favicon.PNG">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body>
+    <header>
+        <img class="img-logo" src="logo.png" alt="AlgoForge logo">
+    </header>
+
+    <div class="container" id="container" style="display:none;">
+        <div class="contain" id="auth">
+            <div class="form" id="sign-up-form" style="display:none;">
+                <h2>Sign Up</h2>
+                <input type="text" id="signUpUsername" placeholder="Username">
+                <input type="email" id="signUpEmail" placeholder="Email">
+                <input type="password" id="signUpPassword" placeholder="Password">
+                <button id="signUp">Sign Up</button>
+                <div class="bottom">
+                    <p>Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
+                </div>
+            </div>
+            <div class="form" id="sign-in-form" style="display:none;">
+                <h2>Sign In</h2>
+                <input type="email" id="signInEmail" placeholder="Email">
+                <input type="password" id="signInPassword" placeholder="Password">
+                <button id="signIn">Sign In</button>
+                <div class="bottom">
+                    <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div class="home" id="home">
+        <div class="left-menu">
+            <ion-icon name="person-circle-outline" class="icon-profile" id="icon-profile"></ion-icon>
+            <ion-icon name="settings-outline" class="icon-settings" id="settings"></ion-icon>
+            <ion-icon name="log-out-outline" class="icon-sign-out" id="sign-out"></ion-icon>
+        </div>
+        <div class="confirmation-popup" id="confirmation-popup" style="display:none;">
+            <p>Are you sure you want to sign out?</p>
+            <button id="confirm-yes">Yes</button>
+            <button id="confirm-no">No</button>
+        </div>        
+        <div class="main" id="boxes">
+            <a href="math-topics.html">
+                <div class="box" id="math-box">
+                    <img class="box-img" src="math-img.jpg" alt="Math">
+                    <p>Math</p>
+                </div>
+            </a>
+            <div class="box" id="physics-box">
+                <img class="box-img" src="physics-img.jpg" alt="Physics">
+                <p>Physics</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile" id="profile">
+        <ion-icon name="close-outline" class="icon-close" id="close-profile"></ion-icon>
+    </div>
+
+    <div class="settings-page" id="settings-page">
+
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+        const supabaseUrl = 'https://nfyqzlvdammxjvumoybk.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5meXF6bHZkYW1teGp2dW1veWJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUzOTc0MTksImV4cCI6MjA0MDk3MzQxOX0.PIaCPx40RW9BoCw2eeCa0ZREfQxFSdz98DrJ0RpnTjE'
+        const supabase = createClient(supabaseUrl, supabaseKey)
+
+        let userName = document.getElementById('signUpUsername');
+        let mail = document.getElementById('signUpEmail');
+        let pass = document.getElementById('signUpPassword');
+
+        const home = document.getElementById('home');
+        const profile = document.getElementById('profile');
+        const confirmationpopup = document.getElementById('confirmation-popup');
+
+        profile.style.display = 'none';
+
+        document.getElementById("signUp").addEventListener("click", async function(event) {
+            const { data, error } = await supabase.auth.signUp({
+                email: mail.value,
+                password: pass.value,
+                options: {
+                    data: {
+                        user_name: userName.value,
+                    },
+                },
+            });
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                alert('Successfully signed up. Please check your mail.');
+                document.getElementById('container').style.display = 'none';
+                home.style.display = 'block';
+            }
+        });
+
+        document.getElementById("signIn").addEventListener("click", async function(event) {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: signInEmail.value,
+                password: signInPassword.value,
+            });
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                alert('Successfully signed in');
+                document.getElementById('auth').style.display = 'none';
+                home.style.display = 'block';
+            }
+        });
+
+        // Switch to Sign In form
+        document.getElementById('showSignIn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('sign-up-form').style.display = 'none';
+            document.getElementById('sign-in-form').style.display = 'block';
+        });
+
+        // Switch to Sign Up form
+        document.getElementById('showSignUp').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('sign-in-form').style.display = 'none';
+            document.getElementById('sign-up-form').style.display = 'block';
+        });
+
+        document.getElementById('sign-out').addEventListener('click', function(event) {
+            confirmationpopup.style.display = 'block';
+        });
+
+        document.getElementById('confirm-yes').addEventListener('click', async function(event) {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                confirmationpopup.style.display = 'none';
+                home.style.display = 'none';
+                document.getElementById('container').style.display = 'block';
+                document.getElementById('sign-up-form').style.display = 'block';
+            }
+        });
+
+        document.getElementById('confirm-no').addEventListener('click', function(event) {
+            confirmationpopup.style.display = 'none';
+        });
+
+        document.getElementById('icon-profile').addEventListener('click', function(event) {
+            document.getElementById('boxes').style.display = 'none';
+            confirmationpopup.style.display = 'none';
+            profile.style.display = 'block';
+        });
+
+        document.getElementById('close-profile').addEventListener('click', function() {
+            profile.style.display = 'none';
+            document.getElementById('boxes').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>

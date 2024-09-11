@@ -1,0 +1,234 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+header {
+    background-color: rgb(44, 135, 255);
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+header .img-logo {
+    height: 50px;
+    width: auto;
+    margin-left: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contain {
+    background-color: rgb(197, 197, 197);
+    margin-top: 100px;
+    width: 300px;
+    height: 370px;
+    border-radius: 20px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #252525;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 280px;
+    height: 30px;
+    margin-bottom: 25px;
+    margin-left: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: rgb(62, 111, 185);
+    color: white;
+    width: 285px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(117, 157, 216);
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.bottom a {
+    color: black;
+    text-decoration: none;
+}
+
+/* Home */
+.home {
+    display: flex;
+}
+
+.left-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(157, 163, 255);
+    width: 50px;
+    height: 100vh;
+}
+
+.icon-sign-out {
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.confirmation-popup {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Onay penceresinin diğer içeriklerin üstünde görünmesi için */
+}
+
+.confirmation-popup button {
+    background-color: rgb(62, 111, 185);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.confirmation-popup button:hover {
+    background-color: rgb(117, 157, 216);
+}
+
+.confirmation-popup button#confirm-no {
+    background-color: rgb(185, 62, 62);
+}
+
+.confirmation-popup button#confirm-no:hover {
+    background-color: rgb(216, 117, 117);
+}
+
+.icon-profile {
+    font-size: 30px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.profile {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+}
+
+.icon-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 8px 0 8px rgba(0, 0, 0, 0.2);
+    width: calc(100vw - 50px);
+    height: 100vh;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px; /* Kutucuk genişliği */
+    height: 200px; /* Kutucuk yüksekliği */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-left: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover animasyonu */
+}
+
+.box:hover {
+    transform: translateY(-5px); /* Hover anında kutucuk yukarı hareket eder */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.box-img {
+    width: 250px; /* Görsel genişliği */
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    margin-bottom: 12px;
+    text-decoration: none;
+}
+
+#boxes {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#boxes.hidden {
+    opacity: 0;
+    pointer-events: none; /* Gizlenirken etkileşim almaması için */
+}
